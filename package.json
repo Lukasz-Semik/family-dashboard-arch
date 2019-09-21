@@ -1,0 +1,26 @@
+{
+  "private": true,
+  "name": "family-dashboard",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:Lukasz-Semik/family-dashboard.git",
+  "author": "djpluki <djpluki@gmail.com>",
+  "license": "MIT",
+  "engines": {
+    "node": "10.14.1"
+  },
+  "workspaces": [
+    "app/*"
+  ],
+  "scripts": {
+    "bootstrap": "lerna bootstrap",
+    "dev:be": "npm run dev --prefix ./app/server",
+    "dev:fe": "npm run dev --prefix ./app/client",
+    "test:fe": "npm run test --prefix ./app/client",
+    "test:be": "npm run test --prefix ./app/server"
+  },
+  "devDependencies": {
+    "lerna": "^3.16.4",
+    "prettier": "^1.18.2"
+  }
+}
