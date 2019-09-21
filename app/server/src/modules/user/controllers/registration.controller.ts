@@ -16,7 +16,7 @@ export class RegistrationController {
 
     const createdUser = await this.userRepo.save({
       ...newUser,
-      email: 'test@email.com',
+      email: 'test-2@email.com',
     });
 
     return res.status(200).json(createdUser);
