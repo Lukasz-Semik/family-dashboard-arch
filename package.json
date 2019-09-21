@@ -17,7 +17,8 @@
     "dev:be": "npm run dev --prefix ./app/server",
     "dev:fe": "npm run dev --prefix ./app/client",
     "test:fe": "npm run test --prefix ./app/client",
-    "test:be": "npm run test --prefix ./app/server"
+    "test:be": "npm run test --prefix ./app/server",
+    "build:packages": "lerna run build:package"
   },
   "devDependencies": {
     "lerna": "^3.16.4",
