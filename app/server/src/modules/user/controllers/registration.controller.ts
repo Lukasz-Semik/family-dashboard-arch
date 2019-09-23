@@ -1,7 +1,7 @@
 import { Controller, Post, Res, HttpStatus, Get } from '@nestjs/common';
 import { Response } from 'express';
 import { Connection, getRepository } from 'typeorm';
-import { apiRoutes } from '@family-dashboard/api-routes';
+// import { apiRoutes } from '@family-dashboard/api-routes';
 
 import { User } from '../../../entities';
 
