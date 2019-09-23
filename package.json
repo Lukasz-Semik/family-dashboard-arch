@@ -18,10 +18,12 @@
     "dev:fe": "npm run dev --prefix ./app/client",
     "test:fe": "npm run test --prefix ./app/client",
     "test:be": "npm run test --prefix ./app/server",
+    "lint": "lerna run lint",
     "build:packages": "lerna run build:package"
   },
   "devDependencies": {
     "lerna": "^3.16.4",
-    "prettier": "^1.18.2"
+    "prettier": "^1.18.2",
+    "tslint": "^5.20.0"
   }
 }
