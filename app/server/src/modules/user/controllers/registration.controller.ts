@@ -1,26 +1,29 @@
-import { Controller, Post, Res, HttpStatus, Get } from '@nestjs/common';
+import { Controller, Body, Post, Res, HttpStatus, Get, UsePipes } from '@nestjs/common';
 import { Response } from 'express';
-import { Connection, getRepository } from 'typeorm';
-// import { apiRoutes } from '@family-dashboard/api-routes';
+import { apiRoutes } from '@family-dashboard/api-routes';
+import { UserSignUpPostOptions } from '@family-dashboard/app-types';
 
-import { User } from '../../../entities';
+import { RegistrationService } from '../services/registration.service';
+import { CreateUserValidatorPipe } from '../pipes';
 
-@Controller()
+@Controller(apiRoutes.user.base)
+@UsePipes(CreateUserValidatorPipe)
 export class RegistrationController {
-  private userRepo = getRepository(User);
-
-  public constructor(private connection: Connection) {}
+  public constructor(private registrationService: RegistrationService) {}
 
   @Post()
-  public async createUser(@Res() res: any): Promise<Response> {
-    const newUser = new User();
+  public async createUser(
+    @Body() body: UserSignUpPostOptions,
+    @Res() res: Response
+  ): Promise<Response> {
+    const user = await this.registrationService.createUser(body);
 
-    const createdUser = await this.userRepo.save({
-      ...newUser,
-      email: 'test-2@email.com',
+    return res.status(HttpStatus.CREATED).json({
+      msg: 'User has been successfully created',
+      data: {
+        user,
+      },
     });
-
-    return res.status(200).json(createdUser);
   }
 
   // TODO: remove test route
