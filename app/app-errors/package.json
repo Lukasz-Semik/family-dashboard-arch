@@ -1,0 +1,19 @@
+{
+  "name": "@family-dashboard/app-errors",
+  "version": "1.0.0",
+  "main": "dist/index",
+  "types": "dist/index",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build:package": "npm run clean && npm run compile",
+    "clean": "rm -rf ./dist",
+    "compile": "tsc -p tsconfig.build.json",
+    "dev": "tsc-watch -p tsconfig.build.json --onSuccess \"node dist/index.js\"",
+    "lint": "tslint -p tsconfig.json -c tslint.json"
+  },
+  "devDependencies": {
+    "typescript": "3.4.3"
+  }
+}

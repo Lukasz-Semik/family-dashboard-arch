@@ -1,40 +1,35 @@
 import { HttpStatus } from '@nestjs/common';
-import { validate } from 'class-validator';
-import { plainToClass } from 'class-transformer';
-import { getRepository } from 'typeorm';
-import { ErrorTypes, RequiredError, UserSignUpPostOptions } from '@family-dashboard/app-types';
+import { getRepository, Connection } from 'typeorm';
+import { UserSignUpPostOptions } from '@family-dashboard/app-types';
+import { EmailErrors } from '@family-dashboard/app-errors';
 
 import { CreateUserValidator } from '../validators';
 import { User } from '../../../entities';
 import { BodyValidatorPipe } from '../../../pipes';
 
-// interface EmailErrors extends RequiredError {
-//   isEmail?: ErrorTypes.WrongFormat;
-//   isTaken?: ErrorTypes.Taken;
-// }
-
-// interface PasswordErros extends RequiredError {
-//   hasWrongFormat?: ErrorTypes.WrongFormat;
-// }
-
 interface CreateUserErrors {
-  requestBody?: 'ds';
-  firstName?: 'ds';
-  lastName?: 'ds';
-  email?: 'ds';
-  password?: 'ds';
+  requestBody?: string[];
+  firstName?: string[];
+  lastName?: string[];
+  email?: string[];
+  password?: string[];
 }
 
 export class CreateUserValidatorPipe extends BodyValidatorPipe<
   UserSignUpPostOptions,
-  CreateUserErrors
+  CreateUserErrors,
+  typeof CreateUserValidator
 > {
   private userRepo = getRepository(User);
+
+  // constructor(private readonly connection: Connection) {
+  //   super();
+  // }
 
   async transform(reqBody: UserSignUpPostOptions) {
     await this.validateEmailTaken(reqBody.email);
 
-    await this.validateFields(reqBody);
+    await this.validateFields(reqBody, CreateUserValidator);
 
     return reqBody;
   }
@@ -44,43 +39,8 @@ export class CreateUserValidatorPipe extends BodyValidatorPipe<
 
     if (existingUser) {
       this.throwError(HttpStatus.CONFLICT, {
-        email: 'ds',
-        // email: {
-        //   isTaken: 'ds',
-        // },
+        email: [EmailErrors.Taken],
       });
     }
-  }
-
-  private async validateFields(reqBody: UserSignUpPostOptions): Promise<void> {
-    const payloadClass = plainToClass(CreateUserValidator, reqBody);
-    this.validationErrors = await validate(payloadClass);
-
-    const errors = {} as CreateUserErrors;
-
-    console.log('dsa', this.validationErrors);
-
-    const emailErrors = this.getErrors('email');
-    if (emailErrors) {
-      errors.email = emailErrors.constraints;
-    }
-
-    const firstNameErrors = this.getErrors('firstName');
-    if (firstNameErrors) {
-      errors.firstName = firstNameErrors.constraints;
-    }
-
-    const lastNameErrors = this.getErrors('lastName');
-    if (lastNameErrors) {
-      errors.lastName = lastNameErrors.constraints;
-    }
-
-    const passwordErrors = this.getErrors('password');
-
-    if (passwordErrors) {
-      errors.password = passwordErrors.constraints;
-    }
-
-    this.throwError(HttpStatus.BAD_REQUEST, errors);
   }
 }
