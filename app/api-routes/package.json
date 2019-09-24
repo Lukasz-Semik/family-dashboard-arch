@@ -13,6 +13,7 @@
     "lint": "tslint -p tsconfig.json -c tslint.json"
   },
   "devDependencies": {
+    "@vue/cli-plugin-typescript": "^3.11.0",
     "typescript": "3.4.3"
   }
 }

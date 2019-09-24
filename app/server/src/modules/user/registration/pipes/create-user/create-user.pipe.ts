@@ -3,9 +3,9 @@ import { getRepository, Connection } from 'typeorm';
 import { UserSignUpPostOptions } from '@family-dashboard/app-types';
 import { EmailErrors } from '@family-dashboard/app-errors';
 
-import { CreateUserValidator } from '../validators';
-import { User } from '../../../entities';
-import { BodyValidatorPipe } from '../../../pipes';
+import { CreateUserValidator } from './create-user.validator';
+import { User } from '../../../../../entities';
+import { BodyValidatorPipe } from '../../../../../pipes';
 
 interface CreateUserErrors {
   requestBody?: string[];
@@ -22,9 +22,9 @@ export class CreateUserValidatorPipe extends BodyValidatorPipe<
 > {
   private userRepo = getRepository(User);
 
-  // constructor(private readonly connection: Connection) {
-  //   super();
-  // }
+  constructor(private readonly connection: Connection) {
+    super();
+  }
 
   async transform(reqBody: UserSignUpPostOptions) {
     await this.validateEmailTaken(reqBody.email);

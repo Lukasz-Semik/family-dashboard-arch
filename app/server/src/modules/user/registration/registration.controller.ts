@@ -3,8 +3,8 @@ import { Response } from 'express';
 import { apiRoutes } from '@family-dashboard/api-routes';
 import { UserSignUpPostOptions } from '@family-dashboard/app-types';
 
-import { RegistrationService } from '../services/registration.service';
-import { CreateUserValidatorPipe } from '../pipes';
+import { RegistrationService } from './registration.service';
+import { CreateUserValidatorPipe } from './pipes';
 
 @Controller(apiRoutes.user.base)
 @UsePipes(CreateUserValidatorPipe)
