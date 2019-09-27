@@ -1,15 +1,15 @@
 import { Injectable, HttpStatus } from '@nestjs/common';
 import { getRepository, Connection } from 'typeorm';
 import { hash } from 'bcryptjs';
-import { UserSignUpPostOptions } from '@family-dashboard/app-types';
+import { User, UserSignUpPostOptions } from '@family-dashboard/app-types';
 
-import { User } from '../../../entities';
+import { User as UserEntity } from '../../../entities';
 import { throwError } from '../../../helpers/errors';
 import { userBaseSerializator } from '../../../serializators';
 
 @Injectable()
 export class RegistrationService {
-  private userRepo = getRepository(User);
+  private userRepo = getRepository(UserEntity);
 
   public constructor(private connection: Connection) {}
 
@@ -17,7 +17,7 @@ export class RegistrationService {
     const { email, password, firstName, lastName } = body;
 
     try {
-      const newUser = new User();
+      const newUser = new UserEntity();
 
       const hashedPassword = await hash(password, 10);
 
