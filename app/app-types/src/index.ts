@@ -1,3 +1,1 @@
-export interface Test {
-  title: string;
-}
+export * from './user';
