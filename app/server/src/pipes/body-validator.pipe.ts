@@ -5,6 +5,8 @@ import { isEmpty } from 'lodash';
 import { BaseErrors } from '@family-dashboard/app-errors';
 import { UserSignUpPostOptions } from '@family-dashboard/app-types';
 
+import { throwError } from '../helpers/errors';
+
 @Injectable()
 export class BodyValidatorPipe<T, E, V> implements PipeTransform {
   async transform(reqBody: T) {
@@ -13,25 +15,7 @@ export class BodyValidatorPipe<T, E, V> implements PipeTransform {
 
   protected validateBody(reqBody?: T) {
     if (!reqBody) {
-      throw new HttpException(
-        {
-          statusCode: status,
-          requestBody: BaseErrors.Required,
-        },
-        HttpStatus.BAD_REQUEST
-      );
-    }
-  }
-
-  protected throwError(status: HttpStatus, errors: E): void {
-    if (!isEmpty(errors)) {
-      throw new HttpException(
-        {
-          statusCode: status,
-          errors,
-        },
-        status
-      );
+      throwError(HttpStatus.BAD_REQUEST, BaseErrors.Required);
     }
   }
 
@@ -48,6 +32,6 @@ export class BodyValidatorPipe<T, E, V> implements PipeTransform {
       errors[error.property] = Object.values(error.constraints);
     });
 
-    this.throwError(HttpStatus.BAD_REQUEST, errors);
+    throwError(HttpStatus.BAD_REQUEST, errors);
   }
 }

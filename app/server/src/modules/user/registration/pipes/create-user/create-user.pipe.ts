@@ -6,6 +6,7 @@ import { EmailErrors } from '@family-dashboard/app-errors';
 import { CreateUserValidator } from './create-user.validator';
 import { User } from '../../../../../entities';
 import { BodyValidatorPipe } from '../../../../../pipes';
+import { throwError } from '../../../../../helpers/errors';
 
 interface CreateUserErrors {
   requestBody?: string[];
@@ -38,7 +39,7 @@ export class CreateUserValidatorPipe extends BodyValidatorPipe<
     const existingUser = await this.userRepo.findOne({ email });
 
     if (existingUser) {
-      this.throwError(HttpStatus.CONFLICT, {
+      throwError(HttpStatus.CONFLICT, {
         email: [EmailErrors.Taken],
       });
     }

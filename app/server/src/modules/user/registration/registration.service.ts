@@ -1,8 +1,10 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { getRepository, Connection } from 'typeorm';
+import { hash } from 'bcryptjs';
 import { UserSignUpPostOptions } from '@family-dashboard/app-types';
 
 import { User } from '../../../entities';
+import { throwError } from '../../../helpers/errors';
 
 @Injectable()
 export class RegistrationService {
@@ -13,16 +15,22 @@ export class RegistrationService {
   public async createUser(body: UserSignUpPostOptions): Promise<User> {
     const { email, password, firstName, lastName } = body;
 
-    const newUser = new User();
+    try {
+      const newUser = new User();
 
-    const createdUser = await this.userRepo.save({
-      ...newUser,
-      email,
-      password,
-      firstName,
-      lastName,
-    });
+      const hashedPassword = await hash(password, 10);
 
-    return createdUser;
+      const createdUser = await this.userRepo.save({
+        ...newUser,
+        password: hashedPassword,
+        email,
+        firstName,
+        lastName,
+      });
+
+      return createdUser;
+    } catch (err) {
+      throwError(HttpStatus.INTERNAL_SERVER_ERROR, err);
+    }
   }
 }
