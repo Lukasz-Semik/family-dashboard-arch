@@ -1,10 +1,11 @@
-import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
+import { Injectable, HttpStatus } from '@nestjs/common';
 import { getRepository, Connection } from 'typeorm';
 import { hash } from 'bcryptjs';
 import { UserSignUpPostOptions } from '@family-dashboard/app-types';
 
 import { User } from '../../../entities';
 import { throwError } from '../../../helpers/errors';
+import { userBaseSerializator } from '../../../serializators';
 
 @Injectable()
 export class RegistrationService {
@@ -28,7 +29,7 @@ export class RegistrationService {
         lastName,
       });
 
-      return createdUser;
+      return userBaseSerializator(createdUser);
     } catch (err) {
       throwError(HttpStatus.INTERNAL_SERVER_ERROR, err);
     }

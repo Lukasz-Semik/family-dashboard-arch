@@ -32,6 +32,8 @@ export class BodyValidatorPipe<T, E, V> implements PipeTransform {
       errors[error.property] = Object.values(error.constraints);
     });
 
-    throwError(HttpStatus.BAD_REQUEST, errors);
+    if (!isEmpty(errors)) {
+      throwError(HttpStatus.BAD_REQUEST, errors);
+    }
   }
 }
