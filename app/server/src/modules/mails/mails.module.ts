@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+
 import { MailsService } from './mails.service';
 import { EnvModule } from '../env/env.module';
 
