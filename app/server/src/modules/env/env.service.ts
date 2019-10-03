@@ -5,7 +5,6 @@ export interface EnvData {
   // application
   APP_ENV: string;
   APP_DEBUG: boolean;
-
   // database
   DB_TYPE: 'postgres';
   DB_HOST?: string;
@@ -33,11 +32,19 @@ export class EnvService {
     return this.envData;
   }
 
+  get<T>(key: string) {
+    return this.read()[key] as T;
+  }
+
   isDev(): boolean {
     return this.envData.APP_ENV === 'development';
   }
 
   isProd(): boolean {
     return this.envData.APP_ENV === 'production';
+  }
+
+  isTest(): boolean {
+    return this.envData.APP_ENV === 'test';
   }
 }
