@@ -1,4 +1,5 @@
 import { User } from '@family-dashboard/app-types';
+
 import { User as UserEntity } from '../entities';
 
 export const userBaseSerializator = (user: User & UserEntity) => {
