@@ -1,2 +1,1 @@
 - issure with to readme lerna add @vue/cli-plugin-typescript --dev --scope=client
-- packages linting
