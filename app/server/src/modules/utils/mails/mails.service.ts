@@ -2,7 +2,7 @@ import * as sgMail from '@sendgrid/mail';
 import { MailData } from '@sendgrid/helpers/classes/mail';
 import { Injectable } from '@nestjs/common';
 
-import { EnvService } from '../env/env.service';
+import { EnvService } from '../env';
 
 @Injectable()
 export class MailsService {
@@ -17,6 +17,7 @@ export class MailsService {
 
   private sendEmail(msg: MailData) {
     if (!this.envService.isTest()) {
+      // tslint:disable no-console
       sgMail.send(msg).catch(err => console.log(err));
     }
   }

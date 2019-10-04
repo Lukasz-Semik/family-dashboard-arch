@@ -15,7 +15,7 @@ export function DatabaseOrmModule(): DynamicModule {
     password: config.DB_PASSWORD,
     database: config.DB_NAME,
     entities: getMetadataArgsStorage().tables.map(tbl => tbl.target),
-    synchronize: false,
+    synchronize: true,
     logging: true,
   });
 }

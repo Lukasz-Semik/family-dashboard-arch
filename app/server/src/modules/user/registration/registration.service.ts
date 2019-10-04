@@ -6,14 +6,19 @@ import { isEmpty } from 'lodash';
 
 import { User as UserEntity } from '../../../entities';
 import { throwError } from '../../../helpers/errors';
-import { userBaseSerializator } from '../../../serializators';
-import { MailsService } from '../../mails/mails.service';
+import { serializeUser } from '../../../serializators';
+import { MailsService } from '../../utils/mails';
+import { TokenService, TokenExpiration } from '../../utils/token';
 
 @Injectable()
 export class RegistrationService {
   private userRepo = getRepository(UserEntity);
 
-  public constructor(private connection: Connection, private mailsService: MailsService) {}
+  public constructor(
+    private connection: Connection,
+    private mailsService: MailsService,
+    private tokenService: TokenService
+  ) {}
 
   public async createUser(body: UserSignUpPostOptions): Promise<User> {
     const { email, password, firstName, lastName } = body;
@@ -31,15 +36,23 @@ export class RegistrationService {
         lastName,
       });
 
+      const token = this.tokenService.create(
+        {
+          email: createdUser.email,
+          id: createdUser.id,
+        },
+        TokenExpiration.ExpireWeeks2
+      );
+
       if (!isEmpty(createdUser)) {
         this.mailsService.sendAccountConfirmationEmail(
           createdUser.email,
           createdUser.firstName,
-          'token'
+          token
         );
       }
 
-      return userBaseSerializator(createdUser);
+      return serializeUser(createdUser);
     } catch (err) {
       throwError(HttpStatus.INTERNAL_SERVER_ERROR, err);
     }

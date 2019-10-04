@@ -1,4 +1,5 @@
-export { UserModule } from './user/user.module';
-export { EnvModule } from './env/env.module';
-export { DatabaseOrmModule } from './database/database-orm.module';
-export { MailsModule } from './mails/mails.module';
+export { UserModule } from './user';
+export { EnvModule } from './utils/env';
+export { DatabaseOrmModule } from './utils/database';
+export { MailsModule } from './utils/mails';
+export { TokenModule } from './utils/token';
