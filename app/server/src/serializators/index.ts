@@ -1,1 +1,1 @@
-export { userBaseSerializator } from './user.serializator';
+export { serializeUser } from './user.serializator';
