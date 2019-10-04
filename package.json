@@ -21,7 +21,7 @@
     "lint": "lerna run lint",
     "build:packages": "lerna run build:package",
     "dev:app-types": "npm run dev --prefix ./app/app-types",
-    "prepush": "yarn lint && yarn test"
+    "prepush": "yarn lint"
   },
   "devDependencies": {
     "husky": "^3.0.8",
