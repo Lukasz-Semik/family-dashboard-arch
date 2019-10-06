@@ -5,7 +5,8 @@ import { getMetadataArgsStorage } from 'typeorm';
 import { EnvService } from '../env/env.service';
 
 export function DatabaseOrmModule(): DynamicModule {
-  const config = new EnvService().read();
+  const envService = new EnvService();
+  const config = envService.read();
 
   return TypeOrmModule.forRoot({
     type: config.DB_TYPE,
@@ -16,6 +17,6 @@ export function DatabaseOrmModule(): DynamicModule {
     database: config.DB_NAME,
     entities: getMetadataArgsStorage().tables.map(tbl => tbl.target),
     synchronize: true,
-    logging: true,
+    logging: envService.isDev(),
   });
 }
