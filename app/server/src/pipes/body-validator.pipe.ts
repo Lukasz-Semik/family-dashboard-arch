@@ -1,4 +1,4 @@
-import { PipeTransform, HttpStatus, HttpException, Injectable } from '@nestjs/common';
+import { PipeTransform, HttpStatus, Injectable } from '@nestjs/common';
 import { plainToClass } from 'class-transformer';
 import { validate } from 'class-validator';
 import { isEmpty } from 'lodash';
@@ -14,8 +14,8 @@ export class BodyValidatorPipe<T, E, V> implements PipeTransform {
   }
 
   protected validateBody(reqBody?: T) {
-    if (!reqBody) {
-      throwError(HttpStatus.BAD_REQUEST, BaseErrors.Required);
+    if (isEmpty(reqBody)) {
+      throwError(HttpStatus.BAD_REQUEST, { body: BaseErrors.Required });
     }
   }
 

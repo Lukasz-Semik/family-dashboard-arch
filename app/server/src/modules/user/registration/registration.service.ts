@@ -20,7 +20,7 @@ export class RegistrationService {
     private tokenService: TokenService
   ) {}
 
-  public async createUser(body: UserSignUpPostOptions): Promise<User> {
+  public async createUser(body: UserSignUpPostOptions): User {
     const { email, password, firstName, lastName } = body;
 
     try {
