@@ -16,7 +16,13 @@ export function DatabaseOrmModule(): DynamicModule {
     password: config.DB_PASSWORD,
     database: config.DB_NAME,
     entities: getMetadataArgsStorage().tables.map(tbl => tbl.target),
-    synchronize: true,
+    synchronize: false,
     logging: envService.isDev(),
+    migrations: [__dirname + '../../../../migrations/**/*{.ts,.js}'],
+    cli: {
+      // Location of migration should be inside src folder
+      // to be compiled into dist/ folder.
+      migrationsDir: 'src/migrations',
+    },
   });
 }
