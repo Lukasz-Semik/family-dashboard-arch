@@ -12,7 +12,7 @@ import { TokenModule } from '../../utils/token';
 import { EnvModule } from '../../utils/env';
 import { MailsModule } from '../../utils/mails';
 
-describe('RegistrationController', () => {
+describe('Registration', () => {
   let app: INestApplication;
 
   beforeAll(async () => {
