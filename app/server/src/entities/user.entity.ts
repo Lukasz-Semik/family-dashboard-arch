@@ -36,10 +36,10 @@ export class User {
   })
   public lastName: string;
 
-  // @Column({
-  //   type: 'bool',
-  // })
-  // public isVerified: boolean;
+  @Column({
+    type: 'boolean',
+  })
+  public isVerified: boolean;
 
   @CreateDateColumn({
     type: 'timestamp',

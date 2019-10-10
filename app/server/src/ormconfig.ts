@@ -1,5 +1,5 @@
 import { ConnectionOptions } from 'typeorm';
-import { EnvService } from './src/modules/utils/env';
+import { EnvService } from './modules/utils/env';
 
 const envService = new EnvService();
 const envConfig = envService.read();

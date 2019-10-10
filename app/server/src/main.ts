@@ -10,10 +10,14 @@ async function bootstrap() {
 
   const port = process.env.port || 8080;
 
-  await app.listen(port, () => {
-    // tslint:disable-next-line no-console
-    console.log(`Listening at http://localhost:${port}/${API_VERSION}`);
-  });
+  try {
+    await app.listen(port, () => {
+      // tslint:disable-next-line no-console
+      console.log(`Listening at http://localhost:${port}/${API_VERSION}`);
+    });
+  } catch (err) {
+    console.log({ err });
+  }
 }
 
 bootstrap();

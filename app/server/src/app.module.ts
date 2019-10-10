@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 
-import { UserModule, MailsModule, DatabaseOrmModule, EnvModule, TokenModule } from './modules';
+import { UserModule, MailsModule, EnvModule, TokenModule } from './modules';
+import { DatabaseOrmModule } from './database-orm.module';
 
 @Module({
   imports: [UserModule, TokenModule, MailsModule, EnvModule, DatabaseOrmModule()],

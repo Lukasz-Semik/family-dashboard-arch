@@ -21,7 +21,9 @@
     "lint": "lerna run lint",
     "build:packages": "lerna run build:package",
     "dev:app-types": "npm run dev --prefix ./app/app-types",
-    "prepush": "yarn lint"
+    "prepush": "yarn lint",
+    "migrate": "npm run typeorm:migrate --prefix ./app/server",
+    "migrate:run": "npm run typeorm:run --prefix ./app/server"
   },
   "devDependencies": {
     "husky": "^3.0.8",
