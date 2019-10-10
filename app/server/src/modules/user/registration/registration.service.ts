@@ -31,6 +31,7 @@ export class RegistrationService {
       const createdUser = await this.userRepo.save({
         ...newUser,
         password: hashedPassword,
+        isVerified: false,
         email,
         firstName,
         lastName,

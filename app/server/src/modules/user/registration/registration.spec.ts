@@ -4,15 +4,15 @@ import { INestApplication } from '@nestjs/common';
 import { apiRoutes } from '@family-dashboard/api-routes';
 import { EmailErrors, BaseErrors } from '@family-dashboard/app-errors';
 
+import { DatabaseOrmModule } from '../../../database-orm.module';
 import { dropDb, dbSeedUser } from '../../../helpers/seeds';
 import { generateUser } from '../../../helpers/dataGenerators';
 import { UserModule } from '../user.module';
-import { DatabaseOrmModule } from '../../utils/database';
 import { TokenModule } from '../../utils/token';
 import { EnvModule } from '../../utils/env';
 import { MailsModule } from '../../utils/mails';
 
-describe('RegistrationController', () => {
+describe('Registration', () => {
   let app: INestApplication;
 
   beforeAll(async () => {

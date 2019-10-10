@@ -2,7 +2,7 @@ import { DynamicModule } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { getMetadataArgsStorage } from 'typeorm';
 
-import { EnvService } from '../env/env.service';
+import { EnvService } from './modules/utils/env';
 
 export function DatabaseOrmModule(): DynamicModule {
   const envService = new EnvService();
@@ -16,7 +16,8 @@ export function DatabaseOrmModule(): DynamicModule {
     password: config.DB_PASSWORD,
     database: config.DB_NAME,
     entities: getMetadataArgsStorage().tables.map(tbl => tbl.target),
-    synchronize: true,
+    synchronize: envService.isTest(),
     logging: envService.isDev(),
+    migrations: [__dirname + '/migrations/**/*{.ts,.js}'],
   });
 }

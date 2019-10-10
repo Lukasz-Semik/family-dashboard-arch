@@ -19,9 +19,12 @@
     "test:fe": "npm run test --prefix ./app/client",
     "test:be": "npm run test:cov --prefix ./app/server",
     "lint": "lerna run lint",
+    "test": "lerna run test",
     "build:packages": "lerna run build:package",
     "dev:app-types": "npm run dev --prefix ./app/app-types",
-    "prepush": "yarn lint"
+    "prepush": "yarn lint && yarn test",
+    "migrate": "npm run typeorm:migrate --prefix ./app/server",
+    "migrate:run": "npm run typeorm:run --prefix ./app/server"
   },
   "devDependencies": {
     "husky": "^3.0.8",
