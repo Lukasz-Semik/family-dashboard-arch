@@ -5,9 +5,11 @@ export const generateUser = ({
   firstName = 'John',
   lastName = 'Doe',
   password = 'Password123.',
+  isVerified = false,
 }: User) => ({
   email,
   firstName,
   lastName,
   password,
+  isVerified,
 });

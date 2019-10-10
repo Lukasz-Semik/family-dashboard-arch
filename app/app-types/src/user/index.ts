@@ -3,6 +3,7 @@ export interface User {
   password: string;
   firstName: string;
   lastName: string;
+  isVerified: boolean;
 }
 
 export interface UserSignUpPostOptions
