@@ -4,9 +4,9 @@ import { UserSignUpPostOptions } from '@family-dashboard/app-types';
 import { EmailErrors } from '@family-dashboard/app-errors';
 
 import { CreateUserValidator } from './create-user.validator';
-import { User } from '../../../../../entities';
-import { BodyValidatorPipe } from '../../../../../pipes';
-import { throwError } from '../../../../../helpers/errors';
+import { User } from '../../../../entities';
+import { BodyValidatorPipe } from '../../../../pipes';
+import { throwError } from '../../../../helpers/errors';
 
 interface CreateUserErrors {
   requestBody?: string[];

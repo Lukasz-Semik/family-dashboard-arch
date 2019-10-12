@@ -1,14 +1,14 @@
-import { Controller, Body, Post, Res, HttpStatus, Get, UsePipes } from '@nestjs/common';
+import { Controller, Body, Post, Res, HttpStatus, UsePipes } from '@nestjs/common';
 import { Response } from 'express';
 import { userApi } from '@family-dashboard/api-routes';
 import { UserSignUpPostOptions } from '@family-dashboard/app-types';
 
-import { RegistrationService } from './registration.service';
+import { RegistrationService } from './services';
 import { CreateUserValidatorPipe } from './pipes';
 
 @Controller(userApi.base)
 @UsePipes(CreateUserValidatorPipe)
-export class RegistrationController {
+export class UserController {
   public constructor(private registrationService: RegistrationService) {}
 
   @Post()
