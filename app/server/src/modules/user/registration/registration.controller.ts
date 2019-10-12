@@ -1,12 +1,12 @@
 import { Controller, Body, Post, Res, HttpStatus, Get, UsePipes } from '@nestjs/common';
 import { Response } from 'express';
-import { apiRoutes } from '@family-dashboard/api-routes';
+import { userApi } from '@family-dashboard/api-routes';
 import { UserSignUpPostOptions } from '@family-dashboard/app-types';
 
 import { RegistrationService } from './registration.service';
 import { CreateUserValidatorPipe } from './pipes';
 
-@Controller(apiRoutes.user.base)
+@Controller(userApi.base)
 @UsePipes(CreateUserValidatorPipe)
 export class RegistrationController {
   public constructor(private registrationService: RegistrationService) {}
@@ -23,14 +23,6 @@ export class RegistrationController {
       data: {
         user,
       },
-    });
-  }
-
-  // TODO: remove test route
-  @Get()
-  public testRoute(@Res() res: Response) {
-    return res.status(HttpStatus.OK).json({
-      msg: 'Test passed',
     });
   }
 }

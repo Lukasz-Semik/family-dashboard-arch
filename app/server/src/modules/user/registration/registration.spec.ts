@@ -1,7 +1,7 @@
 import * as request from 'supertest';
 import { Test } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
-import { apiRoutes } from '@family-dashboard/api-routes';
+import { userApi } from '@family-dashboard/api-routes';
 import { EmailErrors, BaseErrors } from '@family-dashboard/app-errors';
 
 import { DatabaseOrmModule } from '../../../database-orm.module';
@@ -25,7 +25,7 @@ describe('Registration', () => {
     await app.init();
   });
 
-  describe(`Api Route ${apiRoutes.user.api}`, () => {
+  describe(`Api Route ${userApi.fullRoute}`, () => {
     describe('POST method', () => {
       beforeAll(async () => {
         await dropDb();
@@ -43,7 +43,7 @@ describe('Registration', () => {
         });
 
         await request(app.getHttpServer())
-          .post(apiRoutes.user.route)
+          .post(userApi.route)
           .send(user)
           .expect(201)
           .expect(res => {
@@ -61,7 +61,7 @@ describe('Registration', () => {
 
       it('should return various errors', async done => {
         await request(app.getHttpServer())
-          .post(apiRoutes.user.route)
+          .post(userApi.route)
           .send({
             email: 'wrong email format',
             password: 'wrong password format',
@@ -81,7 +81,7 @@ describe('Registration', () => {
 
       it('should return email already taken error', async done => {
         await request(app.getHttpServer())
-          .post(apiRoutes.user.route)
+          .post(userApi.route)
           .send({
             email: 'john.doe@email.com',
             password: 'Password123.',
