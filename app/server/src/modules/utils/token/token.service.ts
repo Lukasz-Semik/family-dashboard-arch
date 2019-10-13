@@ -36,7 +36,7 @@ export class TokenService {
     exp: number;
   }> {
     return new Promise((resolve, reject) => {
-      jwt.verify(token, process.env.JWT_TOKEN, (err, decoded) => {
+      jwt.verify(token, this.secret, (err, decoded) => {
         if (err) {
           return reject(err);
         }

@@ -22,9 +22,6 @@
     "typeorm:run": "npm run typeorm migration:run"
   },
   "dependencies": {
-    "@family-dashboard/api-routes": "^1.0.0",
-    "@family-dashboard/app-errors": "^1.0.0",
-    "@family-dashboard/app-types": "^1.0.0",
     "@nestjs/common": "^6.0.0",
     "@nestjs/core": "^6.0.0",
     "@nestjs/platform-express": "^6.0.0",
@@ -71,6 +68,9 @@
       "^.+\\.(t|j)s$": "ts-jest"
     },
     "coverageDirectory": "./coverage",
-    "testEnvironment": "node"
+    "testEnvironment": "node",
+    "testPathIgnorePatterns": [
+      "<rootDir>/src/migrations/*.ts"
+    ]
   }
 }

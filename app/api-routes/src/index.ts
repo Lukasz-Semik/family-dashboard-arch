@@ -1,7 +1,4 @@
-import { UserRoutes } from './user';
+export { apiVer } from './api-ver';
+import { UserRoute } from './user';
 
-const apiVer = 'api/v1';
-
-export const apiRoutes = {
-  user: new UserRoutes(apiVer, 'user'),
-};
+export const userApi = new UserRoute('user');

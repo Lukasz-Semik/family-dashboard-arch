@@ -4,9 +4,9 @@ import { UserSignUpPostOptions } from '@family-dashboard/app-types';
 import { EmailErrors } from '@family-dashboard/app-errors';
 
 import { CreateUserValidator } from './create-user.validator';
-import { User } from '../../../../../entities';
-import { BodyValidatorPipe } from '../../../../../pipes';
-import { throwError } from '../../../../../helpers/errors';
+import { User } from '../../../../entities';
+import { BodyValidatorPipe } from '../../../../pipes';
+import { throwError } from '../../../../helpers/errors';
 
 interface CreateUserErrors {
   requestBody?: string[];
@@ -30,9 +30,9 @@ export class CreateUserValidatorPipe extends BodyValidatorPipe<
   async transform(reqBody: UserSignUpPostOptions) {
     await this.validateBody(reqBody);
 
-    await this.validateEmailTaken(reqBody.email);
-
     await this.validateFields(reqBody, CreateUserValidator);
+
+    await this.validateEmailTaken(reqBody.email);
 
     return reqBody;
   }

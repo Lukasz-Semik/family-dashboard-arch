@@ -8,3 +8,7 @@ export interface User {
 
 export interface UserSignUpPostOptions
   extends Pick<User, 'email' | 'password' | 'firstName' | 'lastName'> {}
+
+export interface UserConfirmPatchOptions {
+  token: string;
+}
