@@ -1,8 +1,8 @@
 import { Injectable, HttpStatus } from '@nestjs/common';
 import { getRepository, Connection } from 'typeorm';
 import { hash } from 'bcryptjs';
-import { User, UserSignUpPostOptions, UserConfirmPatchOptions } from '@family-dashboard/app-types';
 import { isEmpty } from 'lodash';
+import { User, UserSignUpPostOptions, UserConfirmPatchOptions } from '@family-dashboard/app-types';
 import { EmailErrors } from '@family-dashboard/app-errors';
 
 import { User as UserEntity } from '../../../entities';
