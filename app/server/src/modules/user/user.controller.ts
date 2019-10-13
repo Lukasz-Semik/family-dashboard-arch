@@ -5,14 +5,10 @@ import { UserSignUpPostOptions } from '@family-dashboard/app-types';
 
 import { RegistrationService } from './services';
 import { CreateUserValidatorPipe, ConfirmUserValidatorPipe } from './pipes';
-import { TokenService } from '../utils/token';
 
 @Controller(userApi.name)
 export class UserController {
-  public constructor(
-    private registrationService: RegistrationService,
-    private tokenService: TokenService
-  ) {}
+  public constructor(private registrationService: RegistrationService) {}
 
   @Post()
   @UsePipes(CreateUserValidatorPipe)
