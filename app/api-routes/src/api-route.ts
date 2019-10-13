@@ -4,7 +4,7 @@ export class ApiRoute {
   constructor(public readonly name: string, private readonly apiPrefix = '') {}
 
   private get withPrefix() {
-    return this.apiPrefix ? `${this.apiPrefix}/${name}` : this.name;
+    return this.apiPrefix ? `${this.apiPrefix}/${this.name}` : this.name;
   }
 
   public get base() {

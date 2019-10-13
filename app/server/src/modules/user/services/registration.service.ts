@@ -1,8 +1,9 @@
 import { Injectable, HttpStatus } from '@nestjs/common';
 import { getRepository, Connection } from 'typeorm';
 import { hash } from 'bcryptjs';
-import { User, UserSignUpPostOptions } from '@family-dashboard/app-types';
+import { User, UserSignUpPostOptions, UserConfirmPatchOptions } from '@family-dashboard/app-types';
 import { isEmpty } from 'lodash';
+import { EmailErrors } from '@family-dashboard/app-errors';
 
 import { User as UserEntity } from '../../../entities';
 import { throwError } from '../../../helpers/errors';
@@ -57,5 +58,23 @@ export class RegistrationService {
     } catch (err) {
       throwError(HttpStatus.INTERNAL_SERVER_ERROR, err);
     }
+  }
+
+  public async confirmUser(body: UserConfirmPatchOptions): User {
+    const { email } = await this.tokenService.decode(body.token);
+
+    const existingUser = await this.userRepo.findOne({ email });
+
+    if (isEmpty(existingUser)) {
+      throwError(HttpStatus.NOT_FOUND, { email: [EmailErrors.NotExist] });
+    }
+
+    if (existingUser.isVerified) {
+      throwError(HttpStatus.CONFLICT, { email: [EmailErrors.AlreadyVerified] });
+    }
+
+    const confirmedUser = await this.userRepo.save({ ...existingUser, isVerified: true });
+
+    return serializeUser(confirmedUser);
   }
 }

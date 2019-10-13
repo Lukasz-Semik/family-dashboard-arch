@@ -2,17 +2,18 @@ import { NestFactory } from '@nestjs/core';
 
 import { AppModule } from './app.module';
 
-const API_VERSION = 'api/v1';
+import { userApi, apiVer } from '@family-dashboard/api-routes';
 
+console.log(userApi.fullRoute, userApi.confirm.base);
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  app.setGlobalPrefix(API_VERSION);
+  app.setGlobalPrefix(apiVer);
 
   const port = process.env.port || 8080;
 
   await app.listen(port, () => {
     // tslint:disable-next-line no-console
-    console.log(`Listening at http://localhost:${port}/${API_VERSION}`);
+    console.log(`Listening at http://localhost:${port}/${apiVer}`);
   });
 }
 

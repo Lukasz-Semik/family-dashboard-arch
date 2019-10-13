@@ -30,9 +30,9 @@ export class CreateUserValidatorPipe extends BodyValidatorPipe<
   async transform(reqBody: UserSignUpPostOptions) {
     await this.validateBody(reqBody);
 
-    await this.validateEmailTaken(reqBody.email);
-
     await this.validateFields(reqBody, CreateUserValidator);
+
+    await this.validateEmailTaken(reqBody.email);
 
     return reqBody;
   }
