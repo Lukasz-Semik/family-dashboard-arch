@@ -4,7 +4,6 @@ import { AppModule } from './app.module';
 
 import { userApi, apiVer } from '@family-dashboard/api-routes';
 
-console.log(userApi.fullRoute, userApi.confirm.base);
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.setGlobalPrefix(apiVer);
